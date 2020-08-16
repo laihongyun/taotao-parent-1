@@ -1,0 +1,14 @@
+com\taotao\admin\service\impl\ItemDescServiceImpl.class
+com\taotao\admin\service\impl\JedisClusterServiceImpl.class
+com\taotao\admin\service\impl\ItemServiceImpl.class
+com\taotao\admin\service\impl\JedisPoolServiceImpl$3.class
+com\taotao\admin\service\impl\JedisPoolServiceImpl$5.class
+com\taotao\admin\service\impl\ContentServiceImpl.class
+com\taotao\admin\service\impl\JedisPoolServiceImpl$4.class
+com\taotao\admin\service\impl\JedisPoolServiceImpl$1.class
+com\taotao\admin\service\impl\JedisPoolServiceImpl.class
+com\taotao\admin\service\impl\BaseServiceImpl.class
+com\taotao\admin\service\impl\ItemCatServiceImpl.class
+com\taotao\admin\service\impl\JedisPoolServiceImpl$6.class
+com\taotao\admin\service\impl\ContentCategoryServiceImpl.class
+com\taotao\admin\service\impl\JedisPoolServiceImpl$2.class

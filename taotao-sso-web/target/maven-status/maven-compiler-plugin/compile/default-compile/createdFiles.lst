@@ -1,0 +1,4 @@
+com\taotao\sso\SSOServiceApplication.class
+com\taotao\sso\controller\RegisterForwardController.class
+com\taotao\sso\controller\LoginForwardController.class
+com\taotao\sso\controller\UserController.class

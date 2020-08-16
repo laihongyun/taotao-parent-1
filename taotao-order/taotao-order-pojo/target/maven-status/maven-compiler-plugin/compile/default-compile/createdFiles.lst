@@ -1,0 +1,3 @@
+com\taotao\order\pojo\Order.class
+com\taotao\order\pojo\OrderItem.class
+com\taotao\order\pojo\OrderShipping.class

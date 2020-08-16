@@ -1,0 +1,3 @@
+com\taotao\sso\SSOServiceApplication.class
+com\taotao\sso\service\impl\UserServiceImpl.class
+com\taotao\sso\mapper\UserMapper.class

@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:p="http://www.springframework.org/schema/p"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:jms="http://www.springframework.org/schema/jms"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+      				  http://www.springframework.org/schema/beans/spring-beans.xsd
+      				  http://www.springframework.org/schema/context
+      				  http://www.springframework.org/schema/context/spring-context.xsd
+      				  http://www.springframework.org/schema/jms
+      				  http://www.springframework.org/schema/jms/spring-jms.xsd">
+
+
+
+    <!--    加载url配置文件-->
+    <context:property-placeholder location="classpath:evn.properties,classpath:activemq.properties"></context:property-placeholder>
+
+    <!-- 配置消息中间件连接工厂activeMQConnectionFactory -->
+    <bean id="activeMQConnectionFactory" class="org.apache.activemq.ActiveMQConnectionFactory">
+        <!-- 设置消息中间件服务地址 -->
+        <property name="brokerURL" value="${activemq_brokerURL}" />
+    </bean>
+<!--    配置整合spring的jms单例的消息中间件-->
+    <bean id="connectionFactory" class="org.springframework.jms.connection.SingleConnectionFactory">
+<!--        设置activemq连接工厂的单例工厂-->
+        <property name="targetConnectionFactory" ref="activeMQConnectionFactory"></property>
+    </bean>
+<!--配置jmsTemplate-->
+    <bean id="jmsTemplate" class="org.springframework.jms.core.JmsTemplate">
+        <property name="connectionFactory" ref="connectionFactory"></property>
+        <property name="defaultDestination" ref="itemTopic"></property>
+        <property name="sessionTransacted" value="true"></property>
+    </bean>
+    <bean id="itemTopic" class="org.apache.activemq.command.ActiveMQTopic">
+        <constructor-arg value="item.topic"></constructor-arg>
+    </bean>
+</beans>

@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:p="http://www.springframework.org/schema/p"
+       xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xmlns:dubbo="http://code.alibabatech.com/schema/dubbo"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+      				  http://www.springframework.org/schema/beans/spring-beans.xsd
+      				  http://www.springframework.org/schema/mvc
+      				  http://www.springframework.org/schema/mvc/spring-mvc.xsd
+      				  http://code.alibabatech.com/schema/dubbo
+      	  				http://code.alibabatech.com/schema/dubbo/dubbo.xsd
+      				  http://www.springframework.org/schema/context
+      				  http://www.springframework.org/schema/context/spring-context.xsd">
+
+    <!-- 配置开启组件扫描 -->
+    <context:component-scan base-package="com.taotao"/>
+    <!-- 开启MVC注解驱动 -->
+    <mvc:annotation-driven/>
+
+    <!-- 配置视图解析器 -->
+    <mvc:view-resolvers>
+        <mvc:jsp prefix="/WEB-INF/views/" suffix=".jsp"/>
+    </mvc:view-resolvers>
+
+    <!-- 配置静态资源用WEB容器默认的servlet来处理 -->
+    <mvc:default-servlet-handler/>
+
+<!--    配置拦截器-->
+    <mvc:interceptors>
+        <mvc:interceptor>
+            <mvc:mapping path="/order/**"/>
+            <bean class="com.taotao.portal.interceptor.LoginInterceptor"></bean>
+        </mvc:interceptor>
+    </mvc:interceptors>
+    <!-- 配置视图与控制器 -->
+<!--    <mvc:view-controller path="/" view-name="index"/>-->
+
+
+    <!-- ############## 配置Dubbo服务消费者 ############## -->
+    <!-- 配置当前应用的名称 -->
+    <dubbo:application name="taotao-portal"/>
+
+    <!-- 配置注册中心，采用multicast广播的方式来发现服务名称  224.0.0.0 - 239.255.255.255-->
+    <dubbo:registry protocol="zookeeper" address="192.168.40.145:2181"/>
+
+<!--    &lt;!&ndash; 配置引用服务，产生服务接口的代理对象 &ndash;&gt;-->
+<!--    <dubbo:reference interface="com.taotao.admin.service.ItemCatService"-->
+<!--                     id="itemCatService" timeout="60000"/>-->
+<!--    &lt;!&ndash; 配置引用服务，产生服务接口的代理对象 &ndash;&gt;-->
+<!--    <dubbo:reference interface="com.taotao.admin.service.ItemService"-->
+<!--                     id="itemService" timeout="60000"/>-->
+<!--    &lt;!&ndash; 配置引用服务，产生服务接口的代理对象 &ndash;&gt;-->
+<!--    <dubbo:reference interface="com.taotao.admin.service.ItemDescService"-->
+<!--                     id="ItemDescService" timeout="60000"/>-->
+        <dubbo:reference interface="com.taotao.admin.service.ContentService"
+                         id="contentServiceImpl" timeout="60000"/>
+        <dubbo:reference interface="com.taotao.cart.service.CartService"
+                         id="cartService" timeout="60000"/>
+        <dubbo:reference interface="com.taotao.admin.service.ItemService"
+                         id="itemService" timeout="60000"/>
+        <dubbo:reference interface="com.taotao.sso.service.UserService"
+                         id="userService" timeout="60000"/>
+    <dubbo:reference interface="com.taotao.order.service.OrderService"
+                     id="orderService" timeout="60000"/>
+
+
+</beans>

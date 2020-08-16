@@ -1,0 +1,8 @@
+#redis单机
+spring:
+  redis:
+    host: 192.168.40.145
+    port: 6379
+#tomcat
+server:
+  port: 9098

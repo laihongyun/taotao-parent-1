@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:p="http://www.springframework.org/schema/p"
+       xmlns:dubbo="http://code.alibabatech.com/schema/dubbo"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+      				  http://www.springframework.org/schema/beans/spring-beans.xsd
+      				  http://code.alibabatech.com/schema/dubbo
+      				  http://code.alibabatech.com/schema/dubbo/dubbo.xsd
+      				  http://www.springframework.org/schema/context
+      				  http://www.springframework.org/schema/context/spring-context.xsd">
+
+    <!-- 配置当前应用的名称 -->
+    <dubbo:application name="taotao-admin-service"/>
+
+    <!-- 配置注册中心，采用multicast广播的方式来暴露服务名称  224.0.0.0 - 239.255.255.255-->
+<!--    使用zookeeper作为注册中心-->
+    <dubbo:registry protocol="zookeeper" address="192.168.40.145:2181"/>
+
+    <!-- 用dubbo协议在20880端口暴露服务  -->
+    <dubbo:protocol name="dubbo" port="20880"/>
+
+    <!-- 配置需要暴露服务 -->
+    <dubbo:service interface="com.taotao.admin.service.ItemCatService"
+                   ref="itemCatServiceImpl"/>
+    <!-- 配置需要暴露服务 -->
+    <dubbo:service interface="com.taotao.admin.service.ItemService"
+                   ref="itemServiceImpl"/>
+    <!-- 配置需要暴露服务 -->
+    <dubbo:service interface="com.taotao.admin.service.ItemDescService"
+                   ref="itemDescServiceImpl"/>
+    <!-- 配置需要暴露服务 -->
+    <dubbo:service interface="com.taotao.admin.service.ContentCategoryService"
+                   ref="contentCategoryServiceImpl"/>
+    <!-- 配置需要暴露服务 -->
+    <dubbo:service interface="com.taotao.admin.service.ContentService"
+                   ref="contentServiceImpl"/>
+
+
+</beans>

@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:p="http://www.springframework.org/schema/p"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:jms="http://www.springframework.org/schema/jms" xmlns:jsm="http://www.springframework.org/schema/jms"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+      				  http://www.springframework.org/schema/beans/spring-beans.xsd
+      				  http://www.springframework.org/schema/context
+      				  http://www.springframework.org/schema/context/spring-context.xsd
+      				  http://www.springframework.org/schema/jms
+      				  http://www.springframework.org/schema/jms/spring-jms.xsd">
+<!--加载属性文件-->
+    <context:property-placeholder location="classpath:activemq.properties"/>
+<!--    配置消息服务器连接工厂-->
+    <!-- 配置消息服务器连接工厂activeMQConnectionFactory -->
+    <bean id="activeMQConnectionFactory" class="org.apache.activemq.ActiveMQConnectionFactory">
+        <!-- 设置消息中间件服务地址 -->
+        <property name="brokerURL" value="${activemq_brokerURL}" />
+    </bean>
+
+    <!-- 配置整合Spring的JMS产生单例的连接工厂 -->
+    <bean id="connectionFactory" class="org.springframework.jms.connection.SingleConnectionFactory">
+        <!-- 设置ActiveMQ连接工厂给单例的连接工厂 -->
+        <property name="targetConnectionFactory" ref="activeMQConnectionFactory" />
+    </bean>
+
+<!--    配置消息监听器-->
+    <jsm:listener-container connection-factory="connectionFactory"
+                            destination-type="topic"
+                            acknowledge="transacted">
+<!--        定义消息监听类-->
+            <jms:listener destination="item.topic" ref="itemMessageListener"></jms:listener>
+    </jsm:listener-container>
+    
+<!--    配置消息监听器-->
+    <bean id="itemMessageListener" class="com.taotao.search.listener.ItemMessageListener"></bean>
+</beans>
